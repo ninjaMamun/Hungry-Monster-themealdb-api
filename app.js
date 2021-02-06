@@ -1,11 +1,11 @@
-const getMealList = () =>{
+const getMealList = () =>{ 
     let searchInput = document.getElementById('searchInput').value;
     let parentNode = document.getElementById('showItems');
     let NotFoundParentNode = document.getElementById('notfound');
     fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${searchInput}`)
     .then(response => response.json())
     .then(data => {
-        if(data.meals){
+        if(data.meals){ // return true when searched with valid keyword
             data.meals.forEach(meal => {
                 console.log(meal.idMeal);
                 console.log(meal.strMeal);
@@ -24,11 +24,8 @@ const getMealList = () =>{
                 mealItemDiv.innerHTML = cardHtml;
                 parentNode.appendChild(mealItemDiv);
 
-
-
-
             });
-        }else{
+        }else{ //when wrong input parameter is entered
             const mealItemDiv = document.createElement('div');
             mealItemDiv.className = 'col-md-3 item-columns';
             const notFoundCard = `
@@ -46,8 +43,36 @@ const getMealList = () =>{
         }
     })
 }
-document.getElementById('searchButton').addEventListener('click', function(){
 
+
+const getIngredients = id => {
+    fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`)
+    .then(response => response.json())
+    .then(data => {
+
+        // console.log(data.meals[0].strIngredient1);
+        myMeal = data.meals[0] ;
+        const keys = Object.keys(myMeal);
+        // console.log(keys‌);
+
+
+
+        keys.forEach(key => {
+            if (key.startsWith("strIngredients") && myMeal[key] != "") {
+                console.log(myMeal[key]);
+            }
+        });
+
+
+
+    })
+}
+
+getIngredients(52771);
+
+document.getElementById('searchButton').addEventListener('click', function(){
+    let parentNode = document.getElementById('showItems');
+    parentNode.innerText = ""; // removes previous items
     getMealList();
 
 })
