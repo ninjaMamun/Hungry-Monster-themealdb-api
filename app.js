@@ -1,6 +1,6 @@
 const getMealList = () =>{
     let searchInput = document.getElementById('searchInput').value;
-    let parentNode = document.getElementById('showIteams');
+    let parentNode = document.getElementById('showItems');
     fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?i=${searchInput}`)
     .then(response => response.json())
     .then(data => {
@@ -12,7 +12,7 @@ const getMealList = () =>{
                 
                 let cardHtml = `
                 <div class="card" style="width: 18rem;">
-                    <img src="..." class="card-img-top" alt="...">
+                    <img src = "${meal.strMealThumb}" class="card-img-top" alt="...">
                     <div class="card-body">
                       <h5 class="card-title">${meal.strMeal}</h5>
                     </div>
@@ -32,3 +32,4 @@ const getMealList = () =>{
 document.getElementById('searchButton').addEventListener('click', function(){
     getMealList();
 })
+
