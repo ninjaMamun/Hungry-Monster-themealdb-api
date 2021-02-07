@@ -81,7 +81,7 @@ const getIngredientsAndMeasure = id => {
                   <h1>${meal.strMeal}</h1><br>
                   <h5 >Ingredients</h5><br>
                   <div id="ingredient">
-                        <p><i class="fa fa-check-square tick-icon" aria-hidden="true"></i> TEST </p>
+                        
                     </div> 
               </div>
           </div>
