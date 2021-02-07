@@ -94,8 +94,6 @@ const getIngredientsAndMeasure = id => {
 
         ingredientsArray.forEach((ingredient , index) => {
             const measure = measureArray[index];
-            console.log(measure, ingredient);
-
             ingredientCard += `
             <p><i class="fa fa-check-square tick-icon" aria-hidden="true"></i> ${measure} ${ingredient} </p>
 
