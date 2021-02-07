@@ -50,18 +50,27 @@ const getIngredients = id => {
     .then(response => response.json())
     .then(data => {
 
-        // console.log(data.meals[0].strIngredient1);
-        myMeal = data.meals[0] ;
+        const myMeal = data.meals[0] ;
         const keys = Object.keys(myMeal);
         // console.log(keys‌);
 
 
 
         keys.forEach(key => {
-            if (key.startsWith("strIngredients") && myMeal[key] != "") {
+            
+            if (key.startsWith('strIngredient') && myMeal[key] != "" && myMeal[key] != null ) {
+                // console.log("Duksi Vai AMI");
                 console.log(myMeal[key]);
             }
         });
+
+        // const myMeal = data.meals;
+        // for(let i = 0; i < myMeal.length; i++){
+        //     let mealItem = myMeal[i];
+        //     if(mealItem.startsWith("strIngredients")){
+        //         console.log(mealItem);
+        //     }
+        // }
 
 
 
