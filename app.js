@@ -7,20 +7,29 @@ const getMealList = () =>{
     .then(data => {
         if(data.meals){ // return true when searched with valid keyword
             data.meals.forEach(meal => {
-                console.log(meal.idMeal);
-                console.log(meal.strMeal);
+                // console.log(meal.idMeal);
+                // console.log(meal.strMeal);
                 const mealItemDiv = document.createElement('div');
                 mealItemDiv.className = 'col-md-3 item-columns';
                 
-                let cardHtml = `
-                <div class="card rounded-3 border-0">
-                    <img src = "${meal.strMealThumb}" class="card-img-top" alt="...">
-                    <div class="card-body">
-                      <h5 class="card-title food-title text-center">${meal.strMeal}</h5>
-                    </div>
-                  </div>
+                // let cardHtml = `
+                // <div  class="card rounded-3 border-0">
+                //     <img src = "${meal.strMealThumb}" class="card-img-top" alt="...">
+                //     <div class="card-body">
+                //       <h5 class="card-title food-title text-center">${meal.strMeal}</h5>
+                //     </div>
+                //   </div>
               
-                `;
+                // `;
+
+                let cardHtml = `
+                <div onclick="getIngredientsAndMeasure(${meal.idMeal})"  class="card rounded-3 border-0">
+                <img src = "${meal.strMealThumb}" class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title food-title text-center">${meal.strMeal}</h5>
+                </div>
+                </div>
+                `
                 mealItemDiv.innerHTML = cardHtml;
                 parentNode.appendChild(mealItemDiv);
 
@@ -45,39 +54,40 @@ const getMealList = () =>{
 }
 
 
-const getIngredients = id => {
+const getIngredientsAndMeasure = id => {
     fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`)
     .then(response => response.json())
     .then(data => {
 
         const myMeal = data.meals[0] ;
         const keys = Object.keys(myMeal);
-        // console.log(keys‌);
 
-
-
+        const ingredientsArray = [];
+        const measureArray = [];
         keys.forEach(key => {
             
             if (key.startsWith('strIngredient') && myMeal[key] != "" && myMeal[key] != null ) {
-                // console.log("Duksi Vai AMI");
-                console.log(myMeal[key]);
+
+                ingredientsArray.push(myMeal[key])
+            }
+        });
+        
+        keys.forEach(key => {
+            
+            if (key.startsWith('strMeasure') && myMeal[key] != "" && myMeal[key] != null && myMeal[key] != " " ) {
+
+                measureArray.push(myMeal[key])
             }
         });
 
-        // const myMeal = data.meals;
-        // for(let i = 0; i < myMeal.length; i++){
-        //     let mealItem = myMeal[i];
-        //     if(mealItem.startsWith("strIngredients")){
-        //         console.log(mealItem);
-        //     }
-        // }
-
+        console.log(ingredientsArray);
+        console.log(measureArray);
 
 
     })
 }
 
-getIngredients(52771);
+// getIngredientsAndMeasure(52771);
 
 document.getElementById('searchButton').addEventListener('click', function(){
     let parentNode = document.getElementById('showItems');
